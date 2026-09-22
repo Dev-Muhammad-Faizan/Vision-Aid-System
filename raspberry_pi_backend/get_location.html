@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Get Live Location</title>
+</head>
+<body>
+<h2>Fetching your location...</h2>
+
+<script>
+navigator.geolocation.getCurrentPosition(
+    function(position) {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        fetch(`http://127.0.0.1:5000/location?coords=${lat},${lon}`)
+            .then(response => console.log("Coordinates sent to Python"))
+            .catch(error => console.error("Error sending coordinates:", error));
+    },
+    function(error) {
+        console.error("Error getting location:", error);
+        alert("Unable to get location. Please allow location access.");
+    },
+    { enableHighAccuracy: true }
+);
+</script>
+
+<p>If nothing happens, make sure location permission is allowed in your browser.</p>
+</body>
+</html>
